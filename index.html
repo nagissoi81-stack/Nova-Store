@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نوفا | متجر إلكتروني</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" crossorigin integrity="sha384-aFq0fqr2IZeDbtAZXkISF6XHsFTxE3wR6bRAoVclvusSMBNVUUcXjUVzPDV7CqsN" />
+  <style>
+    /* ───── CSS Variables ───── */
+    :root {
+      --clr-bg: #0a0a0f;
+      --clr-surface: #13131c;
+      --clr-card: #1a1a28;
+      --clr-accent: #e8c97e;
+      --clr-accent2: #c97ecd;
+      --clr-text: #f0eeff;
+      --clr-muted: #8884a8;
+      --clr-border: rgba(232, 201, 126, 0.15);
+
+      --font-display: 'Tajawal', sans-serif;
+      --font-body: 'Cairo', sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 28px;
+
+      --shadow-glow: 0 0 40px rgba(232, 201, 126, 0.12);
+      --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
+
+      --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+      --space-sm: clamp(0.75rem, 2vw, 1rem);
+      --space-md: clamp(1rem, 3vw, 1.5rem);
+      --space-lg: clamp(1.5rem, 4vw, 2.5rem);
+      --space-xl: clamp(2rem, 6vw, 4rem);
+
+      --fs-sm: clamp(0.8rem, 2vw, 0.9rem);
+      --fs-base: clamp(0.95rem, 2.5vw, 1.05rem);
+      --fs-md: clamp(1.1rem, 3vw, 1.3rem);
+      --fs-lg: clamp(1.4rem, 4vw, 2rem);
+      --fs-xl: clamp(2rem, 6vw, 3.5rem);
+      --fs-hero: clamp(2.8rem, 8vw, 5.5rem);
+    }
+
+    /* ───── Reset ───── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: var(--fs-base);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ───── Noise Overlay ───── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ───── NAV ───── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--clr-border);
+      padding: var(--space-sm) var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: var(--fs-lg);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-md);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--fs-sm);
+      color: var(--clr-muted);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--clr-accent); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-cart {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-text);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      font-size: var(--fs-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+    }
+    .btn-cart:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--clr-accent);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* Mobile nav open state */
+    .nav-links.open {
+      display: flex;
+    }
+
+    /* ───── HERO ───── */
+    .hero {
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 60%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(201,126,205,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,201,126,0.1);
+      border: 1px solid rgba(232,201,126,0.3);
+      color: var(--clr-accent);
+      font-size: var(--fs-sm);
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: var(--space-md);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: var(--space-md);
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: var(--fs-md);
+      color: var(--clr-muted);
+      max-width: 480px;
+      margin-bottom: var(--space-lg);
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--clr-accent), #d4a843);
+      color: #0a0a0f;
+      font-weight: 700;
+      font-size: var(--fs-base);
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      min-height: 44px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,201,126,0.35);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--clr-text);
+      font-weight: 600;
+      font-size: var(--fs-base);
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--clr-border);
+      cursor: pointer;
+      transition: all 0.3s;
+      min-height: 44px;
+    }
+    .btn-secondary:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-orb {
+      width: clamp(280px, 40vw, 480px);
+      height: clamp(280px, 40vw, 480px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(232,201,126,0.18), rgba(201,126,205,0.08), transparent 70%);
+      border: 1px solid rgba(232,201,126,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-orb::before {
+      content: '';
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      border: 1px dashed rgba(232,201,126,0.1);
+      animation: spin 20s linear infinite;
+    }
+
+    .hero-product-label {
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 900;
+      font-family: var(--font-display);
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    /* ───── STATS ───── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-sm);
+      padding: var(--space-lg) var(--space-lg);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: var(--space-md);
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: var(--fs-sm);
+      color: var(--clr-muted);
+      margin-top: 4px;
+    }
+
+    /* ───── SECTION ───── */
+    .section {
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-tag {
+      font-size: var(--fs-sm);
+      color: var(--clr-accent);
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    /* ───── PRODUCTS GRID ───── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: var(--space-md);
+    }
+
+    .product-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+      border-color: rgba(232,201,126,0.35);
+    }
+
+    .product-thumb {
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(3rem, 8vw, 5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, var(--clr-card));
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--clr-accent);
+      color: #0a0a0f;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 50px;
+      z-index: 1;
+    }
+
+    .product-info {
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .product-name {
+      font-weight: 700;
+      font-size: var(--fs-md);
+      margin-bottom: 4px;
+    }
+
+    .product-desc {
+      font-size: var(--fs-sm);
+      color: var(--clr-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: var(--fs-md);
+      font-weight: 700;
+      color: var(--clr-accent);
+    }
+
+    .btn-add {
+      background: rgba(232,201,126,0.1);
+      border: 1px solid rgba(232,201,126,0.3);
+      color: var(--clr-accent);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      min-height: 44px;
+    }
+    .btn-add:hover { background: var(--clr-accent); color: #0a0a0f; }
+
+    /* ───── FEATURES (2-col) ───── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: var(--space-md);
+    }
+
+    .feature-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      transition: border-color 0.3s;
+    }
+    .feature-card:hover { border-color: rgba(232,201,126,0.4); }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .feature-title {
+      font-weight: 700;
+      font-size: var(--fs-md);
+      margin-bottom: 8px;
+    }
+
+    .feature-text {
+      color: var(--clr-muted);
+      font-size: var(--fs-sm);
+      line-height: 1.8;
+    }
+
+    /* ───── TESTIMONIALS ───── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+      gap: var(--space-md);
+    }
+
+    .testimonial-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+    }
+
+    .testimonial-stars {
+      color: var(--clr-accent);
+      font-size: 1.1rem;
+      margin-bottom: var(--space-sm);
+      letter-spacing: 2px;
+    }
+
+    .testimonial-text {
+      color: var(--clr-muted);
+      font-size: var(--fs-sm);
+      line-height: 1.9;
+      margin-bottom: var(--space-sm);
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0a0a0f;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .author-info .name { font-weight: 600; font-size: var(--fs-sm); }
+    .author-info .role { color: var(--clr-muted); font-size: 0.78rem; }
+
+    /* ───── CTA SECTION ───── */
+    .cta-section {
+      margin: 0 var(--space-lg) var(--space-xl);
+      background: linear-gradient(135deg, rgba(232,201,126,0.1), rgba(201,126,205,0.08));
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(232,201,126,0.15), transparent 70%);
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: 900;
+      margin-bottom: var(--space-sm);
+      position: relative;
+    }
+
+    .cta-desc {
+      color: var(--clr-muted);
+      font-size: var(--fs-md);
+      margin-bottom: var(--space-lg);
+      position: relative;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .cta-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-text);
+      font-family: var(--font-body);
+      font-size: var(--fs-base);
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      min-width: clamp(200px, 40vw, 320px);
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .cta-input:focus { border-color: var(--clr-accent); }
+    .cta-input::placeholder { color: var(--clr-muted); }
+
+    /* ───── FOOTER ───── */
+    footer {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .footer-brand .nav-logo { display: inline-block; margin-bottom: var(--space-sm); }
+    .footer-brand p { color: var(--clr-muted); font-size: var(--fs-sm); max-width: 240px; }
+
+    .footer-col h4 {
+      font-weight: 700;
+      font-size: var(--fs-sm);
+      margin-bottom: var(--space-md);
+      color: var(--clr-text);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { color: var(--clr-muted); font-size: var(--fs-sm); transition: color 0.3s; }
+    .footer-col a:hover { color: var(--clr-accent); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--clr-border);
+      padding-top: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      color: var(--clr-muted);
+      font-size: var(--fs-sm);
+    }
+
+    /* ───── ANIMATIONS ───── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ───── RESPONSIVE: TABLET ───── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { max-width: 100%; }
+      .hero-cta { justify-content: center; }
+      .hero-visual { display: none; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ───── RESPONSIVE: MOBILE ───── */
+    @media (max-width: 600px) {
+      nav { flex-wrap: wrap; }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        order: 3;
+        background: var(--clr-surface);
+        border-top: 1px solid var(--clr-border);
+        padding: var(--space-sm) 0;
+        gap: var(--space-xs);
+      }
+
+      .nav-links li { text-align: center; }
+      .nav-links a { display: block; padding: 10px; font-size: var(--fs-base); }
+
+      .hamburger { display: flex; }
+
+      .hero { padding: var(--space-lg) var(--space-md); min-height: 70vh; }
+      .section { padding: var(--space-lg) var(--space-md); }
+
+      .stats { grid-template-columns: 1fr 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .cta-section { margin: 0 var(--space-md) var(--space-lg); }
+    }
+
+    /* ───── SCROLL REVEAL ───── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Color variants for product thumbs */
+    .thumb-1 { background: linear-gradient(135deg, #1a1a28, #2a1a3a); }
+    .thumb-2 { background: linear-gradient(135deg, #1a2a1a, #0f1f1a); }
+    .thumb-3 { background: linear-gradient(135deg, #2a1a1a, #3a0f0f); }
+    .thumb-4 { background: linear-gradient(135deg, #1a1a2a, #0f0f3a); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">نوفا</div>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#products">المنتجات</a></li>
+    <li><a href="#features">المميزات</a></li>
+    <li><a href="#reviews">آراء العملاء</a></li>
+    <li><a href="#contact">تواصل</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="btn-cart">🛒 السلة <span style="background:var(--clr-accent);color:#0a0a0f;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">3</span></button>
+    <button class="hamburger" id="hamburger" aria-label="القائمة">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✦ وصل حديثاً — مجموعة 2026</div>
+    <h1 class="hero-title">
+      تسوّق بذكاء<br>
+      عِش بـ<span class="accent">أناقة</span>
+    </h1>
+    <p class="hero-desc">
+      اكتشف منتجات مختارة بعناية تجمع بين الجودة العالية والتصميم الاستثنائي. تجربة تسوق مختلفة تبدأ هنا.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-primary">استكشف المجموعة</button>
+      <button class="btn-secondary">تعرف علينا</button>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-orb">
+      <span class="hero-product-label">نوفا</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats reveal">
+  <div class="stat-item">
+    <div class="stat-num">+50K</div>
+    <div class="stat-label">عميل راضٍ</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">1200</div>
+    <div class="stat-label">منتج متاح</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4.9★</div>
+    <div class="stat-label">تقييم متوسط</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24h</div>
+    <div class="stat-label">توصيل سريع</div>
+  </div>
+</div>
+
+<!-- ── PRODUCTS ── -->
+<section class="section" id="products">
+  <div class="section-header reveal">
+    <div class="section-tag">المنتجات</div>
+    <h2 class="section-title">الأكثر مبيعاً</h2>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-thumb thumb-1">
+        🎧
+        <span class="product-badge">جديد</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">سماعات نوفا برو</div>
+        <div class="product-desc">صوت فائق الجودة بتقنية إلغاء الضوضاء</div>
+        <div class="product-footer">
+          <span class="product-price">٨٩٩ ر.س</span>
+          <button class="btn-add">+ أضف</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-thumb thumb-2">
+        ⌚
+        <span class="product-badge">خصم ٢٠٪</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">ساعة ذكية إيليت</div>
+        <div class="product-desc">تتبع صحتك بدقة عالية طوال اليوم</div>
+        <div class="product-footer">
+          <span class="product-price">١٢٩٩ ر.س</span>
+          <button class="btn-add">+ أضف</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-thumb thumb-3">
+        📷
+      </div>
+      <div class="product-info">
+        <div class="product-name">كاميرا سونيك ٤K</div>
+        <div class="product-desc">التقط اللحظات بوضوح لا مثيل له</div>
+        <div class="product-footer">
+          <span class="product-price">٢١٩٩ ر.س</span>
+          <button class="btn-add">+ أضف</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-thumb thumb-4">
+        💻
+        <span class="product-badge">مميز</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">لابتوب نوفا سليم</div>
+        <div class="product-desc">أداء استثنائي في تصميم رفيع وخفيف</div>
+        <div class="product-footer">
+          <span class="product-price">٤٩٩٩ ر.س</span>
+          <button class="btn-add">+ أضف</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section" id="features">
+  <div class="section-header reveal">
+    <div class="section-tag">لماذا نوفا</div>
+    <h2 class="section-title">مميزاتنا</h2>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">🚀</div>
+      <div class="feature-title">توصيل خلال ٢٤ ساعة</div>
+      <p class="feature-text">نوصل طلبك لأي مكان في المملكة خلال يوم عمل واحد مع إمكانية تتبع الشحنة لحظة بلحظة.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">دفع آمن ١٠٠٪</div>
+      <p class="feature-text">بياناتك محمية بأحدث تقنيات التشفير. ادفع بثقة عبر مدى، فيزا، ماستركارد أو تحويل بنكي.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">↩️</div>
+      <div class="feature-title">إرجاع مجاني ٣٠ يوم</div>
+      <p class="feature-text">غير راضٍ عن المنتج؟ أرجعه مجاناً خلال ٣٠ يوم دون أي أسئلة. رضاك هو أولويتنا.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">ضمان الجودة</div>
+      <p class="feature-text">كل منتج يمر بفحص دقيق قبل وصوله إليك. نضمن لك أعلى معايير الجودة في كل قطعة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section" id="reviews">
+  <div class="section-header reveal">
+    <div class="section-tag">آراء العملاء</div>
+    <h2 class="section-title">ماذا يقولون عنا</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">تجربة تسوق رائعة من البداية للنهاية. السماعات وصلت في اليوم التالي وجودتها تفوق التوقعات.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">أح</div>
+        <div class="author-info">
+          <div class="name">أحمد الحربي</div>
+          <div class="role">عميل منذ ٢٠٢٤</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">خدمة العملاء ممتازة وسريعة الاستجابة. اشتريت الساعة الذكية وما خيّبت ظني أبداً.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">سا</div>
+        <div class="author-info">
+          <div class="name">سارة العتيبي</div>
+          <div class="role">عميلة منذ ٢٠٢٣</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">أفضل متجر إلكتروني تعاملت معه. الأسعار منافسة والمنتجات أصلية ١٠٠٪ مع ضمان كامل.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">مخ</div>
+        <div class="author-info">
+          <div class="name">محمد الخالدي</div>
+          <div class="role">عميل منذ ٢٠٢٢</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div class="cta-section reveal" id="contact">
+  <h2 class="cta-title">ابقَ على اطلاع دائم 💫</h2>
+  <p class="cta-desc">اشترك في نشرتنا البريدية واحصل على خصم ١٥٪ على أول طلب لك</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="بريدك الإلكتروني..." />
+    <button class="btn-primary">اشترك الآن</button>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo">نوفا</div>
+      <p>وجهتك الأولى للتسوق الإلكتروني الذكي. جودة لا تُقارن، أسعار لا تُنافَس.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>المتجر</h4>
+      <ul>
+        <li><a href="#">المنتجات</a></li>
+        <li><a href="#">العروض</a></li>
+        <li><a href="#">الجديد</a></li>
+        <li><a href="#">المفضلة</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>الدعم</h4>
+      <ul>
+        <li><a href="#">تتبع الطلب</a></li>
+        <li><a href="#">سياسة الإرجاع</a></li>
+        <li><a href="#">الضمان</a></li>
+        <li><a href="#">تواصل معنا</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>الشركة</h4>
+      <ul>
+        <li><a href="#">من نحن</a></li>
+        <li><a href="#">مدوّنة</a></li>
+        <li><a href="#">الوظائف</a></li>
+        <li><a href="#">الشركاء</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 نوفا. جميع الحقوق محفوظة.</span>
+    <span> تصميم وتطوير م/ناجي الشيخ  </span>
+  </div>
+</footer>
+
+<script>
+  // ── Hamburger Menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+
+  // Close menu when a link is tapped
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // ── Scroll Reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

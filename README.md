@@ -14,8 +14,7 @@
 نحن نسعى لتقديم حلول برمجية تجمع بين التصميم الإبداعي والحماية التقنية العالية.
 
 ### 📞 تواصل معي
-* **الموقع الشخصي:www.nagialshaikh-tech.com
-  (https://nagissoi81-stack.github.io/Portfolio/)
-* **المكان:** قطر
+*الموقع الشخصي: www.nagialshaikh-tech.com
+                                                                              (https://nagissoi81-stack.github.io/Portfolio/)*
 ## 🌐 رابط المعاينة الحية
 يمكنك زيارة الموقع من هنا: [Nova-Store Live](https://nagissoi81-stack.github.io/Nova-Store/)
